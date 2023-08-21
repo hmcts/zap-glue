@@ -1,4 +1,4 @@
-FROM ubuntu:22.04
+FROM ruby:2.7.8-bullseye
 
 ################################################################################################
 #       Environment
@@ -22,22 +22,6 @@ RUN npm install -g nsp retire@1.6.2 eslint eslint-plugin-scanjs-rules eslint-plu
 #
 RUN useradd -ms /bin/bash --groups sudo glue
 USER glue
-
-#################################################################################################
-#       RVM / Ruby
-#
-#
-RUN gpg --keyserver keyserver.ubuntu.com --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 7D2BAF1CF37B13E2069D6956105BD0E739499BDB
-RUN /bin/bash -l -c "curl -L https://get.rvm.io | bash -s stable"
-RUN /bin/bash -l -c "source ~/.rvm/scripts/rvm"
-RUN /bin/bash -l -c "rvm requirements"
-RUN /bin/bash -l -c "rvm install 2.7.8"
-RUN /bin/bash -l -c "rvm use 2.7.8 --default"
-RUN /bin/bash -l -c "rvm pkg install openssl"
-RUN /bin/bash -l -c "rvm remove 2.7.8"
-RUN /bin/bash -l -c "rvm reinstall ruby-2.7.8 --with-openssl-dir=$HOME/.rvm/usr"
-RUN /bin/bash -l -c "gem install curb --no-document"
-ENV PATH $PATH:/home/glue/.rvm/rubies/ruby-2.3.1/bin
 
 #################################################################################################
 #       Python
