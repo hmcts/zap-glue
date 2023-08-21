@@ -1,4 +1,4 @@
-FROM --platform=linux/arm64 ruby:2.7.8-bullseye AS build
+FROM ruby:2.7.8-bullseye
 
 ################################################################################################
 #       Environment
