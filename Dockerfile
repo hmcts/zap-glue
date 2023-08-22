@@ -83,21 +83,24 @@ RUN echo "addSbtPlugin(\"net.vonbuchholtz\" % \"sbt-dependency-check\" % \"0.1.4
 
 ## Working Dir
 RUN /bin/bash -l -c "mkdir -p /home/glue/tmp"
-WORKDIR /home/glue/
+WORKDIR /home/glue/tmp
 
 ## Core Pipeline (and ruby tools)
 RUN /bin/bash -l -c "git clone https://github.com/OWASP/glue.git"
-#RUN /bin/bash -l -c "mkdir -p /home/glue/glue"
-ADD . /home/glue/glue
 
-WORKDIR /home/glue/glue
+USER root
+RUN /bin/bash -l -c "cp -ra /home/glue/tmp/glue /"
+RUN /bin/bash -l -c "chown -R glue:glue /glue"
+
+USER glue
+
+WORKDIR /glue
+
 RUN /bin/bash -l -c "gem install brakeman -v 5.4.1"
-RUN /bin/bash -l -c "gem install bundler; bundle install -j20; rm owasp-glue*.gem; gem build glue.gemspec; gem install owasp-glue*.gem;"
+RUN /bin/bash -l -c "gem install bundler; bundle install -j20; gem build glue.gemspec; gem install owasp-glue*.gem;"
 
 ENTRYPOINT ["glue"]
 CMD ["-h"]
-
-WORKDIR /glue
 
 ENV GLUE_FILE=""
 
