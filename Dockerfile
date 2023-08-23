@@ -97,7 +97,7 @@ USER glue
 WORKDIR /glue
 
 RUN /bin/bash -l -c "gem install brakeman -v 5.4.1"
-RUN /bin/bash -l -c "gem install bundler; bundle install -j20; gem build glue.gemspec; gem install owasp-glue*.gem;"
+RUN /bin/bash -l -c "gem install bundler:1.15.4; bundle install -j20; gem build glue.gemspec; gem install slack-ruby-client; gem install owasp-glue*.gem;"
 
 ENTRYPOINT ["glue"]
 CMD ["-h"]
@@ -106,6 +106,4 @@ ENV GLUE_FILE=""
 
 COPY --chown=root:1001 . .
 
-COPY run_glue.sh /glue
-
-RUN sudo chmod +x /glue/run_glue.sh
+COPY zaproxy_mapping.json /glue
