@@ -26,7 +26,12 @@ USER glue
 #################################################################################################
 #       Python
 #
-RUN /bin/bash -l -c "sudo apt install python3-bandit python3-awsscout2 -y"
+RUN sudo apt-get install python3-bandit -y
+
+#################################################################################################
+#       Scoutsuite
+#
+RUN sudo pip3 install scoutsuite
 
 #################################################################################################
 #       Java
@@ -42,10 +47,7 @@ WORKDIR /home/glue/tools/
 #################################################################################################
 #       Truffle Hog
 #
-# RUN /bin/bash -l -c "sudo pip install truffleHog"
-RUN git clone https://github.com/runako/truffleHog.git
-WORKDIR /home/glue/tools/truffleHog
-RUN git checkout rg-local-scan
+RUN curl -sSfL https://raw.githubusercontent.com/trufflesecurity/trufflehog/main/scripts/install.sh | sh -s -- -b /usr/local/bin v3.92.3
 
 WORKDIR /home/glue/tools/
 
@@ -55,12 +57,6 @@ RUN unzip owasp-dep-check.zip
 
 # Maven
 RUN sudo apt-get install -y maven
-
-# FINDBUGS (Experimental)
-#RUN curl -L http://downloads.sourceforge.net/project/findbugs/findbugs/3.0.1/findbugs-3.0.1.zip --output findbugs.zip
-#RUN unzip findbugs.zip
-#RUN curl -L http://search.maven.org/remotecontent?filepath=com/h3xstream/findsecbugs/findsecbugs-plugin/1.4.4/findsecbugs-plugin-1.4.4.jar > findbugs-3.0.1/plugin/findsecbugs.jar
-#RUN git clone https://github.com/find-sec-bugs/find-sec-bugs.git
 
 # SBT plugin (for Scala)
 RUN sudo apt-get update
