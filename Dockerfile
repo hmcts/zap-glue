@@ -26,8 +26,7 @@ USER glue
 #################################################################################################
 #       Python
 #
-RUN /bin/bash -l -c "sudo apt install python3-bandit"
-RUN /bin/bash -l -c "sudo apt install python3-awsscout2"
+RUN /bin/bash -l -c "sudo apt install python3-bandit python3-awsscout2 -y"
 
 #################################################################################################
 #       Java
