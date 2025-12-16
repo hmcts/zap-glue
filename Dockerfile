@@ -26,9 +26,8 @@ USER glue
 #################################################################################################
 #       Python
 #
-RUN /bin/bash -l -c "sudo pip install --upgrade pip"
-RUN /bin/bash -l -c "sudo pip install bandit"
-RUN /bin/bash -l -c "sudo pip install awsscout2"
+RUN /bin/bash -l -c "sudo apt install python3-bandit"
+RUN /bin/bash -l -c "sudo apt install python3-awsscout2"
 
 #################################################################################################
 #       Java
