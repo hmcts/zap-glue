@@ -31,7 +31,9 @@ RUN sudo apt-get install python3-bandit -y
 #################################################################################################
 #       Scoutsuite
 #
-RUN sudo pip3 install scoutsuite
+RUN virtualenv -p python3 venv
+RUN source venv/bin/activate
+RUN pip install scoutsuite
 
 #################################################################################################
 #       Java
