@@ -26,7 +26,7 @@ USER glue
 #################################################################################################
 #       Python
 #
-RUN sudo apt-get install python3-bandit -y
+RUN sudo apt-get install python3-bandit python3-virtualenv -y
 
 #################################################################################################
 #       Scoutsuite
