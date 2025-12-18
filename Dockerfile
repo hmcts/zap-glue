@@ -32,7 +32,7 @@ RUN sudo apt-get install python3-bandit python3-virtualenv -y
 #       Scoutsuite
 #
 
-ENV VIRTUAL_ENV=/opt/venv
+ENV VIRTUAL_ENV=/home/glue/venv
 RUN python3 -m venv $VIRTUAL_ENV
 RUN pip install scoutsuite
 ENV PATH="$VIRTUAL_ENV/bin:$PATH"
