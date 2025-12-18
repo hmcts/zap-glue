@@ -48,7 +48,7 @@ WORKDIR /home/glue/tools/
 #################################################################################################
 #       Truffle Hog
 #
-RUN curl -sSfL https://raw.githubusercontent.com/trufflesecurity/trufflehog/main/scripts/install.sh | sh -s -- -b /usr/local/bin v3.92.3
+RUN curl -sSfL https://raw.githubusercontent.com/trufflesecurity/trufflehog/main/scripts/install.sh | sudo sh -s -- -b /usr/local/bin v3.92.3
 
 WORKDIR /home/glue/tools/
 
