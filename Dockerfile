@@ -39,7 +39,6 @@ RUN sudo apt-get install python3-bandit python3-virtualenv -y
 #       Java
 #
 ## JDK needed for Dependency Check Maven plugin
-RUN sudo apt-get install -y software-properties-common
 RUN sudo apt-get update
 RUN sudo apt-get install -y default-jre
 
