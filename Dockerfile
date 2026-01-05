@@ -2,6 +2,7 @@ FROM ruby:3.4.7-trixie
 
 ################################################################################################
 #       Environment
+ # renovate: datasource=github-releases depName=trufflesecurity/trufflehog
 ARG TRUFFLEHOG_VERSION=3.92.3
 ARG DEBIAN_FRONTEND=noninteractive
 
