@@ -1,8 +1,8 @@
-FROM ruby:3.4.8-trixie
+FROM ruby:3.4.7-trixie
 
 ################################################################################################
 #       Environment
-#renovate: datasource=github-tags depName=trufflesecurity/trufflehog
+#renovate: datasource=github-releases depName=trufflesecurity/trufflehog extractVersion=^v(?<version>.*)$
 ARG TRUFFLEHOG_VERSION=3.92.3
 ARG DEBIAN_FRONTEND=noninteractive
 
