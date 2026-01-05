@@ -8,12 +8,11 @@
     {
       "customType": "regex",
       "description": "Update ARGs in Dockerfiles",
-      "fileMatch": [
-          "Dockerfile"
+      "managerFilePatterns": [
+        "/Dockerfile/"
       ],
       "matchStrings": [
-          "# renovate: datasource=(?<datasource>.*?) depName=(?<depName>.*?)( versioning=(?<versioning>.*?))?\\sARG .*?_VERSION=(?<currentValue>.*)(\\sARG .*?_CHECKSUM=(?<currentDigest>.*))?\\s"
-
+        "# renovate: datasource=(?<datasource>.*?) depName=(?<depName>.*?)( versioning=(?<versioning>.*?))?\\sARG .*?_VERSION=(?<currentValue>.*)(\\sARG .*?_CHECKSUM=(?<currentDigest>.*))?\\s"
       ],
       "versioningTemplate": "{{#if versioning}}{{{versioning}}}{{else}}semver{{/if}}"
     }
