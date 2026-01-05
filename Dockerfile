@@ -1,8 +1,9 @@
-FROM ruby:2.7.8-bullseye
+FROM ruby:3.4.7-trixie
 
 ################################################################################################
 #       Environment
-#
+#renovate: datasource=github-tags depName=trufflesecurity/trufflehog
+ARG TRUFFLEHOG_VERSION=3.92.3
 ARG DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update && apt-get install -y git-core sudo curl zlib1g-dev build-essential libssl-dev libreadline-dev libyaml-dev libsqlite3-dev sqlite3 libxml2-dev libxslt1-dev libffi-dev libgdbm-dev libncurses5-dev automake libtool bison libffi-dev gnupg patch gawk g++ gcc make libc6-dev libcurl3-dev autoconf libtool ncurses-dev zlib1g openssl libcurl4-openssl-dev libgmp-dev clamav md5deep nodejs npm default-jre unzip python3 python3-pip jq
@@ -26,15 +27,21 @@ USER glue
 #################################################################################################
 #       Python
 #
-RUN /bin/bash -l -c "sudo pip install --upgrade pip"
-RUN /bin/bash -l -c "sudo pip install bandit"
-RUN /bin/bash -l -c "sudo pip install awsscout2"
+RUN sudo apt-get install python3-bandit python3-virtualenv python3-venv -y
+
+#################################################################################################
+#       Scoutsuite
+#
+
+ENV VIRTUAL_ENV=/home/glue/venv
+RUN python3 -m venv $VIRTUAL_ENV
+RUN /home/glue/venv/bin/pip install scoutsuite
+ENV PATH="$VIRTUAL_ENV/bin:$PATH"
 
 #################################################################################################
 #       Java
 #
 ## JDK needed for Dependency Check Maven plugin
-RUN sudo apt-get install -y software-properties-common
 RUN sudo apt-get update
 RUN sudo apt-get install -y default-jre
 
@@ -44,10 +51,7 @@ WORKDIR /home/glue/tools/
 #################################################################################################
 #       Truffle Hog
 #
-# RUN /bin/bash -l -c "sudo pip install truffleHog"
-RUN git clone https://github.com/runako/truffleHog.git
-WORKDIR /home/glue/tools/truffleHog
-RUN git checkout rg-local-scan
+RUN curl -sSfL https://raw.githubusercontent.com/trufflesecurity/trufflehog/main/scripts/install.sh | sudo sh -s -- -b /usr/local/bin v${TRUFFLEHOG_VERSION}
 
 WORKDIR /home/glue/tools/
 
@@ -57,12 +61,6 @@ RUN unzip owasp-dep-check.zip
 
 # Maven
 RUN sudo apt-get install -y maven
-
-# FINDBUGS (Experimental)
-#RUN curl -L http://downloads.sourceforge.net/project/findbugs/findbugs/3.0.1/findbugs-3.0.1.zip --output findbugs.zip
-#RUN unzip findbugs.zip
-#RUN curl -L http://search.maven.org/remotecontent?filepath=com/h3xstream/findsecbugs/findsecbugs-plugin/1.4.4/findsecbugs-plugin-1.4.4.jar > findbugs-3.0.1/plugin/findsecbugs.jar
-#RUN git clone https://github.com/find-sec-bugs/find-sec-bugs.git
 
 # SBT plugin (for Scala)
 RUN sudo apt-get update
