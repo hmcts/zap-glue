@@ -7,12 +7,14 @@
   "customManagers": [
     {
       "customType": "regex",
+      "datasourceTemplate": "github-releases",
+      "depNameTemplate": "trufflesecurity/trufflehog",
       "description": "Update trufflehog version in Dockerfiles",
       "managerFilePatterns": [
         "/Dockerfile/"
       ],
       "matchStrings": [
-        "TRUFFLEHOG_VERSION = '(?<depName>ghcr\\.io/trufflesecurity/trufflehog):(?<currentValue>\\d+\\.\\d+\\.\\d+)'"
+        "TRUFFLEHOG_VERSION = '(?<currentValue>\\d+\\.\\d+\\.\\d+)'"
       ],
       "versioningTemplate": "{{#if versioning}}{{{versioning}}}{{else}}semver{{/if}}"
     }
