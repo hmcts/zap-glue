@@ -1,12 +1,15 @@
 {
-    "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-    "extends": [
-      "github>hmcts/.github//renovate/automerge-minor",
-      "local>hmcts/.github:renovate-config"
-    ],
-  "regexManagers": [
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "github>hmcts/.github//renovate/automerge-minor",
+    "local>hmcts/.github:renovate-config"
+  ],
+  "customManagers": [
     {
-      "fileMatch": ["Dockerfile$"],
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/Dockerfile$/"
+      ],
       "matchStrings": [
         "datasource=(?<datasource>.*?) depName=(?<depName>.*?)( versioning=(?<versioning>.*?))?\\s.*?_VERSION=\\$\\(echo (?<currentValue>.*) \\| tr \\-d \\'v\\'\\)\\s"
       ],
@@ -15,8 +18,12 @@
   ],
   "packageRules": [
     {
-      "matchDatasources": ["github-tags"],
-      "matchPackageNames": ["trufflesecurity/trufflehog"],
+      "matchDatasources": [
+        "github-tags"
+      ],
+      "matchPackageNames": [
+        "trufflesecurity/trufflehog"
+      ],
       "versioning": "regex:^(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)$"
     }
   ]
