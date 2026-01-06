@@ -46,7 +46,8 @@ jobs:
         # if: github.event_name == 'schedule'
         if: github.event_name == 'workflow_dispatch'
         run: |
+          tag=$(date +%Y%m%d)
           git config --global user.email "github-platform-operations@HMCTS.NET"
           git config --global user.name "hmcts-platform-operations"
-          git tag ${{ steps.docker_build.outputs.digest }}
-          git push origin ${{ steps.docker_build.outputs.digest }}
+          git tag $tag
+          git push origin $tag
