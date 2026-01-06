@@ -44,7 +44,7 @@ jobs:
 
       - name: Create Tag (Scheduled Only)
         # if: github.event_name == 'schedule'
-        if: github.event_name == 'worflow_dispatch''
+        if: github.event_name == 'workflow_dispatch''
         run: |
           git config --global user.email "github-platform-operations@HMCTS.NET"
           git config --global user.name "hmcts-platform-operations"
