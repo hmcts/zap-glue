@@ -26,12 +26,14 @@ jobs:
           registry: ${{ env.AZURE_CONTAINER_REGISTRY_URL }}
           username: ${{ secrets.REGISTRY_USERNAME }}
           password: ${{ secrets.REGISTRY_PASSWORD }}
+
       - name: Generate build ID
         id: prep
         run: |
           sha=${GITHUB_SHA::8}
           ts=$(date +%s)
           echo "::set-output name=BUILD_ID::${sha}-${ts}"
+
       - name: Build and Push
         id: docker_build
         uses: docker/build-push-action@v6
@@ -41,9 +43,10 @@ jobs:
           tags: ${{ env.AZURE_CONTAINER_REGISTRY_URL }}/zap-glue:${{ steps.prep.outputs.BUILD_ID }}
 
       - name: Create Tag (Scheduled Only)
-        if: github.event_name == 'schedule'
+        # if: github.event_name == 'schedule'
+        if: github.event_name == 'worflow_dispatch''
         run: |
           git config --global user.email "github-platform-operations@HMCTS.NET"
           git config --global user.name "hmcts-platform-operations"
-          git tag ${{ steps.prep.outputs.BUILD_ID }}
+          git tag ${{ steps.docker_build.outputs.digest }}'
           git push origin ${{ steps.prep.outputs.BUILD_ID }}
