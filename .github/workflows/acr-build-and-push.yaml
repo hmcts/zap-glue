@@ -41,13 +41,3 @@ jobs:
           push: true
           platforms: linux/amd64
           tags: ${{ env.AZURE_CONTAINER_REGISTRY_URL }}/zap-glue:${{ steps.prep.outputs.BUILD_ID }}
-
-      - name: Create Tag (Scheduled Only)
-        # if: github.event_name == 'schedule'
-        if: github.event_name == 'workflow_dispatch'
-        run: |
-          tag=$(date +%Y%m%d)
-          git config --global user.email "github-platform-operations@HMCTS.NET"
-          git config --global user.name "hmcts-platform-operations"
-          git tag $tag
-          git push origin $tag
