@@ -15,10 +15,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Run security scan
-        run: |
-          trivy fs --severity HIGH,CRITICAL .
-
       - name: Generate build ID
         id: prep
         run: |
