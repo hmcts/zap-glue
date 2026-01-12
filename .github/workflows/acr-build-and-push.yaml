@@ -28,9 +28,9 @@ jobs:
       - name: Build and push
         uses: hmcts/cnp-githubactions-library/container-build-push@main
         with:
-          registry: hmctsprod.azurecr.io
-          registry-username: ${{ secrets.HMCTSPROD_REGISTRY_USERNAME }}
-          registry-password: ${{ secrets.HMCTSPROD_REGISTRY_PASSWORD }}
+          registry: ${{ env.AZURE_CONTAINER_REGISTRY_URL }}
+          registry-username: ${{ secrets.REGISTRY_USERNAME }}
+          registry-password: ${{ secrets.REGISTRY_PASSWORD }}
           image-name: zap-glue
           image-tags: |
             latest
