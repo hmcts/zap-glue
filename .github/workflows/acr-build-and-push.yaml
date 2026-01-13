@@ -21,9 +21,8 @@ jobs:
       - name: Generate build ID
         id: prep
         run: |
-          sha=${GITHUB_SHA::8}
-          ts=$(date +%s)
-          echo "::set-output name=BUILD_ID::${sha}-${ts}"
+          ts=$(date +%Y.%m.%d.%H%M%S)
+          echo "::set-output name=BUILD_ID::${ts}"
 
       - name: Build and push
         uses: hmcts/cnp-githubactions-library/container-build-push@main
